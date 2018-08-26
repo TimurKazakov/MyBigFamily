@@ -122,7 +122,7 @@
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
                 android:src="@drawable/birthday_icon"
-
+android:onClick="onClickBirthday"
                 android:text="@string/BirthdayButton" />
 
             <Button

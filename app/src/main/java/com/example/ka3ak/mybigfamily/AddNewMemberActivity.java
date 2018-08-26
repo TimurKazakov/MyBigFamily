@@ -101,7 +101,6 @@ public class AddNewMemberActivity extends AppCompatActivity {
     int myYear = 2000;
     int myMonth = 00;
     int myDay = 01;
-    TextView tvDate;
 
     /** Called when the activity is first created. */
 
@@ -202,16 +201,13 @@ public class AddNewMemberActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        String imageFileName = "JPEG_" + timeStamp+".jpg";
+//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),imageFileName);
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+//        mCurrentPhotoPath = imageFileName;
         return image;
     }
     private void dispatchTakePictureIntent() {

@@ -71,5 +71,8 @@ Intent intent =  new Intent(MainActivity.this, MeActivity.class);
 }
 
 
-
+    public void onClickBirthday(View view) {
+        Intent intent = new Intent(MainActivity.this, BirthdayActivity.class);
+        startActivity(intent);
+    }
 }

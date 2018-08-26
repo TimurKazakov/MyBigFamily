@@ -102,7 +102,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
     Button save, cancel;
     private Uri photoURI;
 
-    public void birthday_onclick(View view) {
+    private void birthday_onclick(View view) {
         showDialog(DIALOG_DATE);
     }
 
@@ -239,16 +239,13 @@ public class FirstLaunchActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        String imageFileName = "JPEG_" + timeStamp+".jpg";
+//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),imageFileName);
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+//        mCurrentPhotoPath = imageFileName;
         return image;
     }
 
