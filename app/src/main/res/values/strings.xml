@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">MyBigFamily</string>
+    <string name="MeButton">Me</string>
+    <string name="TreeButton">MyTree</string>
+    <string name="BirthdayButton">Birthday</string>
+    <string name="add_new_Person">Add new Person</string>
+    <!--<string name="photo_or_gallery">Photo or gallery?</string>-->
+    <string name="title_activity_add_new_member">add_new_member</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="input_surname">Input surname</string>
+    <string name="input_birthday">Input birthday</string>
+    <string name="input_name">Input name</string>
+    <string name="father">Father</string>
+    <string name="mother">Mother</string>
+    <string name="likes">Likes</string>
+    <string name="notes">Notes</string>
+    <string name="pets">Pets</string>
+    <string name="dislikes">Dislikes</string>
+    <string name="input_patronymic">Input patronymic</string>
+
+
+    <string-array name="photo_or_gallery">
+    <item>Photo</item>
+    <item>Gallery</item>
+
+</string-array>
+    <string-array name="family_enum">
+        <item>brother/sister</item>
+        <item>brother-in-law/sister-in-law</item>
+        <item>son/daughter</item>
+        <item>nephew/niece</item>
+        <item>grandfather/grandmother</item>
+        <item>uncle/aunt</item>
+    </string-array>
+</resources>

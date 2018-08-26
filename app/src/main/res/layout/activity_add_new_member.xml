@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddNewMemberActivity">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<!--main-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+<!--photo+basic data-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:clickable="true"
+                    android:onClick="onClickAddNewMemberImageView"
+                    android:id="@+id/add_new_member_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/not_avalible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/add_new_member_name_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/input_name"
+                        android:inputType="textPersonName" />
+
+                    <EditText
+                        android:id="@+id/add_new_member_surname_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:layout_weight="1"
+                        android:hint="@string/input_surname"
+                        android:inputType="textPersonName" />
+
+                    <EditText
+                        android:id="@+id/add_new_member_patronymic_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:layout_weight="1"
+                        android:hint="@string/input_patronymic"
+                        android:inputType="textPersonName"/>
+
+                    <EditText
+                        android:id="@+id/add_new_member_birthday_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:layout_weight="1"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:onClick="birthday_onclick"
+                        android:hint="@string/input_birthday"
+                        android:inputType="date" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+<!--parents-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!--father-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/add_new_member_father_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/father"
+                        android:inputType="textPersonName" />
+
+                    <EditText
+                        android:id="@+id/add_new_member_father_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/input_birthday"
+                        android:inputType="textPersonName" />
+
+
+
+                        />
+
+                </LinearLayout>
+               <!--mother-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/add_new_member_mother_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/mother"
+                        android:inputType="textPersonName" />
+
+
+                    <EditText
+                        android:id="@+id/add_new_member_mother_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/input_birthday"
+                        android:inputType="textPersonName" />
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+<!--kinship pets and notes-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <Spinner
+                    android:id="@+id/spinner_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/family_enum"
+                    />
+
+                <EditText
+                    android:id="@+id/add_new_member_like_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/likes"
+
+                    android:ems="10"
+
+                    android:inputType="textMultiLine" />
+                <EditText
+                    android:id="@+id/add_new_member_dislike_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/dislikes"
+                    android:inputType="textMultiLine" />
+                <EditText
+                    android:id="@+id/add_new_member_pets_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/pets"
+                     />
+                <EditText
+                    android:id="@+id/add_new_member_notes_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/notes"
+                     />
+            </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/add_new_member_button_save"
+        android:onClick="onClickSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/add_new_member_button_cancel"
+        android:onClick="onClickCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:layout_weight="1"/>
+</LinearLayout>
+        </LinearLayout>
+<!--/main-->
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

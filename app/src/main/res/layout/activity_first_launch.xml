@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstLaunchActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--photo+basic data-->
+
+
+            <ImageView
+                android:id="@+id/first_launch_profile_photo"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_weight="2"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onClickPhoto"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/photo_image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:paddingLeft="3dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/first_launch_profile_name_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:ems="10"
+                    android:hint="@string/input_name"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/first_launch_profile_surname_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:layout_weight="1"
+                    android:hint="@string/input_surname"
+                    android:gravity="center"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/first_launch_profile_birthday_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="birthday_onclick"
+                    android:hint="@string/input_birthday"
+                    android:inputType="date" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+
+                android:layout_weight="1"
+                android:gravity="bottom">
+
+                <Button
+                    android:id="@+id/profile_save_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+
+                    android:layout_weight="1"
+
+                    android:text="@string/save" />
+
+                <Button
+                    android:id="@+id/profile_cancel_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+
+                    android:layout_weight="1"
+                    android:text="@string/cancel" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</android.support.constraint.ConstraintLayout>
