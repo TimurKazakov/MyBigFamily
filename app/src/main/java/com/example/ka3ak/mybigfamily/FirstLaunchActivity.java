@@ -236,7 +236,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
                     fos.write(bitmapToFileData);
                     bos.close();
                     fos.close();
-                    
+
 
 
                 } catch (IOException e) {
