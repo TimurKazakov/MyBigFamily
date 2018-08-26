@@ -62,10 +62,9 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:layout_weight="1"
-                    android:focusable="false"
-                    android:clickable="true"
+
+
                     android:gravity="center"
-                    android:onClick="birthday_onclick"
                     android:hint="@string/input_birthday"
                     android:inputType="date" />
 

@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
+import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -55,12 +56,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.SQLData;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -123,8 +126,8 @@ public class FirstLaunchActivity extends AppCompatActivity {
         firstLaunchName = findViewById(R.id.first_launch_profile_name_editText);
         firstLaunchSurname = findViewById(R.id.first_launch_profile_surname_editText);
         firstLaunchBirthday = findViewById(R.id.first_launch_profile_birthday_editText);
-        save =(Button) findViewById(R.id.profile_save_btn);
-        cancel =(Button) findViewById(R.id.profile_cancel_btn);
+        save = findViewById(R.id.profile_save_btn);
+        cancel = findViewById(R.id.profile_cancel_btn);
 
 
 
@@ -214,15 +217,33 @@ public class FirstLaunchActivity extends AppCompatActivity {
 
             if(resultCode == RESULT_OK){
                 Uri selectedImage = data.getData();
+
+
+
+
+                mCurrentPhotoPath = selectedImage.getAuthority();
+
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                     width = startPhoto.getWidth();
                     height = startPhoto.getHeight();
+                    File galleryFile = createImageFile();
+                    Bitmap bitmapToFile = bitmap;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmapToFile.compress(Bitmap.CompressFormat.JPEG,0,bos);
+                    byte[] bitmapToFileData = bos.toByteArray();
+                    FileOutputStream fos = new FileOutputStream(galleryFile);
+                    fos.write(bitmapToFileData);
+                    bos.close();
+                    fos.close();
+                    
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 startPhoto.setImageBitmap(bitmap);
+
 
             }
         }

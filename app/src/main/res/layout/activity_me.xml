@@ -103,16 +103,7 @@
                         android:hint="@string/input_birthday"
                         android:inputType="textPersonName" />
 
-                    <ImageButton
-                        android:id="@+id/father_photo_btn"
-                        android:layout_weight="1"
-                        android:layout_width="300dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/photo_image"
-                        android:scaleType="fitXY"
-                        android:background="#FFFFFF"
 
-                        />
 
                 </LinearLayout>
                 <!--mother-->
@@ -140,15 +131,7 @@
                         android:hint="@string/input_birthday"
                         android:inputType="textPersonName" />
 
-                    <ImageButton
-                        android:id="@+id/mother_photo_btn"
-                        android:layout_weight="1"
-                        android:layout_width="300dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/photo_image"
-                        android:scaleType="fitXY"
-                        android:background="#FFFFFF"
-                        />
+
 
                 </LinearLayout>
 

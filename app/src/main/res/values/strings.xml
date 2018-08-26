@@ -9,7 +9,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="input_surname">Input surname</string>
-    <string name="input_birthday">Input birthday</string>
+    <string name="input_birthday">Birthday dd/mm/yyyy</string>
     <string name="input_name">Input name</string>
     <string name="father">Father</string>
     <string name="mother">Mother</string>

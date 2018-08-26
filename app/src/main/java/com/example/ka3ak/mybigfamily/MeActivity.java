@@ -23,7 +23,7 @@ public class MeActivity extends AppCompatActivity {
     Cursor cursor;
     EditText name, surname, birthday, father, fatherBirthday, mother, motherBirthday;
     ImageView myPhotoImageView;
-    ImageButton fatherPhoto, motherPhoto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +54,14 @@ public class MeActivity extends AppCompatActivity {
 //        myPhotoImageView.setImageURI(photoImage);
 //        myPhotoImageView.setImageDrawable(Drawable.createFromPath(photoSQLName));
 
-
-        File photoFile = new File(SQLphoto);
-        fatherPhoto = findViewById(R.id.father_photo_btn);
-        motherPhoto = findViewById(R.id.mother_photo_btn);
-        Bitmap bmp = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-        myPhotoImageView.setImageBitmap(bmp);
-
+        try {
+            File photoFile = new File(SQLphoto);
+            Bitmap bmp = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+            myPhotoImageView.setImageBitmap(bmp);
+        }  catch (Exception e){
+            Log.d("log", "Profile photo not found");
+            myPhotoImageView.setImageResource(R.drawable.not_avalible);
+        }
 
     }
 
