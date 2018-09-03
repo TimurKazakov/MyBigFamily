@@ -21,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
    TextView upperMainActivityTextView,middleMainActivityTextView,lowerMainActivityTextView;
 
 
-    public static    FamilyContract familyBase;
-    public static    SQLiteDatabase sqLiteDatabase ;
+    public static  FamilyContract familyBase;
+    public static SQLiteDatabase sqLiteDatabase ;
+    public static ArrayList<Person> dataBserPersons = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +41,22 @@ public class MainActivity extends AppCompatActivity {
             Log.d("log", "Table not found");
         }
         // first launch
-        cursor.close();
+        for (int i = 1; i <cursor.getCount() ; i++) {
+            dataBserPersons.add(new Person(cursor.getInt(cursor.getColumnIndex("id"))));
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MainActivity.upperPager = (ViewPager) findViewById(R.id.viewPager);
         MainActivity.middlePager = (ViewPager) findViewById(R.id.viewPager2);
         MainActivity.lowerPager = (ViewPager) findViewById(R.id.viewPager3);
-//        upperMainActivityTextView = findViewById(R.id.main_activity_1_swapper_textview);
-//        middleMainActivityTextView = findViewById(R.id.main_activity_2_swapper_textview);
-//        lowerMainActivityTextView = findViewById(R.id.main_activity_3_swapper_textview);
+        upperMainActivityTextView = findViewById(R.id.main_activity_1_swapper_textview);
+        middleMainActivityTextView = findViewById(R.id.main_activity_2_swapper_textview);
+        lowerMainActivityTextView = findViewById(R.id.main_activity_3_swapper_textview);
 
 
         ViewPagerAdapter topSwap = new ViewPagerAdapter(this);
-//    Integer[] intArray={1,2,3,4,5};
-//        topSwap.setImages(intArray);
+
 
     MainActivity.upperPager.setAdapter(topSwap);
 
