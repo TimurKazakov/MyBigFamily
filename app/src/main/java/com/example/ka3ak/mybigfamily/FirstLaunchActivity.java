@@ -3,52 +3,21 @@ package com.example.ka3ak.mybigfamily;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.IntentSender;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.Path;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Parcelable;
-import android.os.UserHandle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
-import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -56,21 +25,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ka3ak.mybigfamily.utlity.Orthography;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.sql.SQLData;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import data.FamilyContract;
 
 public class FirstLaunchActivity extends AppCompatActivity {
 
@@ -78,7 +40,6 @@ public class FirstLaunchActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 2;
     int DIALOG_DATE = 1;
     int myYear = 2000;
-    ;
     int myMonth = 00;
     int myDay = 01;
 
@@ -131,28 +92,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
 
 
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View view) {
-                ContentValues contentValues =new ContentValues();
-                contentValues.put("name", firstLaunchName.getText().toString());
-                contentValues.put("surname", firstLaunchSurname.getText().toString());
-                contentValues.put("birthday", firstLaunchBirthday.getText().toString());
-                contentValues.put("photo", mCurrentPhotoPath);
-                contentValues.put("kinship", 10);
 
-                MainActivity.sqLiteDatabase.insert("Family",null, contentValues);
-                Log.d("log", "Data Inserted");
-
-
-
-
-                Intent backToMain = new Intent(FirstLaunchActivity.this, MainActivity.class);
-                startActivity(backToMain);
-
-
-            }
-        });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,9 +157,6 @@ public class FirstLaunchActivity extends AppCompatActivity {
 
             if(resultCode == RESULT_OK){
                 Uri selectedImage = data.getData();
-
-
-
 
                 mCurrentPhotoPath = selectedImage.getAuthority();
 
@@ -304,5 +241,46 @@ public class FirstLaunchActivity extends AppCompatActivity {
 
     }
 
-}
+    public void firstLaunchSaveBtn(View view) {
+       if (    (Orthography.nameRegex(firstLaunchName.getText().toString()) && Orthography.nameRegex(firstLaunchSurname.getText().toString())) ||
+               (Orthography.dataRegex(firstLaunchBirthday.getText().toString()) && Orthography.nameRegex(firstLaunchName.getText().toString())) ||
+               (Orthography.dataRegex(firstLaunchBirthday.getText().toString()) && Orthography.nameRegex(firstLaunchSurname.getText().toString()))){
+           ContentValues ownerValues =new ContentValues();
+           ownerValues.put("name", firstLaunchName.getText().toString());
+           ownerValues.put("surname", firstLaunchSurname.getText().toString());
+           ownerValues.put("birthday", firstLaunchBirthday.getText().toString());
+
+           ownerValues.put("photo", mCurrentPhotoPath);
+           ownerValues.put("kinship", 10);
+
+           ContentValues fatherValues = new ContentValues();
+           fatherValues.put("name", " ");
+           fatherValues.put("surname", " ");
+           fatherValues.put("birthday", " ");
+
+           ContentValues motherValues = new ContentValues();
+           motherValues.put("name", " ");
+           motherValues.put("surname", " ");
+           motherValues.put("birthday", " ");
+
+           MainActivity.sqLiteDatabase.insert("Family",null, ownerValues);
+           MainActivity.sqLiteDatabase.insert("Family",null, fatherValues);
+           MainActivity.sqLiteDatabase.insert("Family",null, motherValues);
+           Log.d("log", "Data Inserted");
+
+
+
+
+           Intent backToMain = new Intent(FirstLaunchActivity.this, MainActivity.class);
+           startActivity(backToMain);
+
+
+       }
+        else {
+           Toast.makeText(this, R.string.input_correct_data, Toast.LENGTH_SHORT).show();
+       }
+
+    }
+    }
+
 

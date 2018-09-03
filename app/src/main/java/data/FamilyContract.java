@@ -36,7 +36,9 @@ public class FamilyContract extends SQLiteOpenHelper {
                "photo text, " +
                "kinship INTEGER, " +
                "father text, " +
+               "fatherBirthday text," +
                "mother text," +
+               "motherBirthday text," +
                "likes text," +
                "dislikes text," +
                "pets text," +

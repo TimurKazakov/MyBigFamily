@@ -9,12 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import data.FamilyContract;
 
 public class MainActivity extends AppCompatActivity {
 
    public static ViewPager upperPager, middlePager, lowerPager, viewPager;
+   TextView upperMainActivityTextView,middleMainActivityTextView,lowerMainActivityTextView;
 
 
     public static    FamilyContract familyBase;
@@ -42,18 +46,30 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.upperPager = (ViewPager) findViewById(R.id.viewPager);
         MainActivity.middlePager = (ViewPager) findViewById(R.id.viewPager2);
         MainActivity.lowerPager = (ViewPager) findViewById(R.id.viewPager3);
-
+//        upperMainActivityTextView = findViewById(R.id.main_activity_1_swapper_textview);
+//        middleMainActivityTextView = findViewById(R.id.main_activity_2_swapper_textview);
+//        lowerMainActivityTextView = findViewById(R.id.main_activity_3_swapper_textview);
 
 
         ViewPagerAdapter topSwap = new ViewPagerAdapter(this);
+//    Integer[] intArray={1,2,3,4,5};
+//        topSwap.setImages(intArray);
+
     MainActivity.upperPager.setAdapter(topSwap);
 
     ViewPagerAdapter midSwap = new ViewPagerAdapter(this);
+
     MainActivity.middlePager.setAdapter(midSwap);
 
     ViewPagerAdapter botSwap = new ViewPagerAdapter(this);
+
     MainActivity.lowerPager.setAdapter(botSwap);
+
+
+
     }
+
+
 
 
 
@@ -69,9 +85,7 @@ public void onClickMe(View view){
 Intent intent =  new Intent(MainActivity.this, MeActivity.class);
     startActivity(intent);
 }
-
-
-    public void onClickBirthday(View view) {
+public void onClickBirthday(View view) {
         Intent intent = new Intent(MainActivity.this, BirthdayActivity.class);
         startActivity(intent);
     }

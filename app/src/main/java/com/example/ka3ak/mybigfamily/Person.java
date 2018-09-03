@@ -23,6 +23,12 @@ public static Person returnOwner(){
     Person me = new Person(name, surname, birthday);
     return (me);
 }
+
+    public Person(int id) {
+        this.id = id;
+        Cursor cursor = MainActivity.sqLiteDatabase.query("Family", null, "id ="+id, null,null,null,null);
+    }
+
     private int id;
     private String name;
     private  String surname;
@@ -31,17 +37,68 @@ public static Person returnOwner(){
     private   String photoUri;
     private   String kinship;
     private   String mother;
+    private   String motherBirthday;
     private   String father;
+    private   String fatherBirthday;
     private   String likes;
     private   String dislikes;
     private   String pets;
     private   String notes;
 
 
+    public String getMotherBirthday() {
+        return motherBirthday;
+    }
+
+    public void setMotherBirthday(String motherBirthday) {
+        this.motherBirthday = motherBirthday;
+    }
+
+    public String getFatherBirthday() {
+        return fatherBirthday;
+    }
+
+    public void setFatherBirthday(String fatherBirthday) {
+        this.fatherBirthday = fatherBirthday;
+    }
+
+    public String getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String likes) {
+        this.likes = likes;
+    }
+
+    public String getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(String dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public String getPets() {
+        return pets;
+    }
+
+    public void setPets(String pets) {
+        this.pets = pets;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public Person(String name, String surname, String birthday) {
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
+
     }
 
     public Person(int id, String name, String surname, String patronymic, String birthday, String photoUri, String kinship, String mother, String father) {

@@ -102,38 +102,6 @@ public class AddNewMemberActivity extends AppCompatActivity {
     int myMonth = 00;
     int myDay = 01;
 
-    /** Called when the activity is first created. */
-
-
-
-    public void birthday_onclick(View view) {
-        showDialog(DIALOG_DATE);
-    }
-
-
-    protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_DATE) {
-            DatePickerDialog tpd = new DatePickerDialog(this, myCallBack, myYear, myMonth, myDay);
-            return tpd;
-        }
-        return super.onCreateDialog(id);
-    }
-
-    DatePickerDialog.OnDateSetListener myCallBack = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            myYear = year;
-            myMonth = monthOfYear;
-            myDay = dayOfMonth;
-            TextView birthdayProfileTextView = (TextView) findViewById(R.id.profile_birthday_editText);
-            birthdayProfileTextView.setText(myDay + "/" + (myMonth+1) + "/" + myYear);
-
-//       +1 because first month start from zero
-        }
-    };
-
-
     ImageView startPhoto = null;
     Uri photoURI = null;
     String mCurrentPhotoPath;
@@ -246,20 +214,20 @@ public class AddNewMemberActivity extends AppCompatActivity {
 
    //buttons
     public void onClickSave(View view) {
-        ContentValues nemMemberContentValues =new ContentValues();
-        nemMemberContentValues.put("name", addNewMemberName.getText().toString());
-        nemMemberContentValues.put("surname", addNewMemberSurname.getText().toString());
-        nemMemberContentValues.put("patronymic", addNewMemberPatronymic.getText().toString());
-        nemMemberContentValues.put("birthday", addNewMemberBirthday.getText().toString());
-        nemMemberContentValues.put("photo", mCurrentPhotoPath);
-        nemMemberContentValues.put("kinship", kinship);
-        nemMemberContentValues.put("mother", addNewMemberMother.getText().toString());
-        nemMemberContentValues.put("father", addNewMemberFather.getText().toString());
-        nemMemberContentValues.put("likes", addNewMemberLikes.getText().toString());
-        nemMemberContentValues.put("dislikes", addNewMemberDislikes.getText().toString());
-        nemMemberContentValues.put("pets", addNewMemberPets.getText().toString());
-        nemMemberContentValues.put("notes", addNewMemberNotes.getText().toString());
-        MainActivity.sqLiteDatabase.insert("Family",null, nemMemberContentValues);
+        ContentValues newMemberContentValues =new ContentValues();
+        newMemberContentValues.put("name", addNewMemberName.getText().toString());
+        newMemberContentValues.put("surname", addNewMemberSurname.getText().toString());
+        newMemberContentValues.put("patronymic", addNewMemberPatronymic.getText().toString());
+        newMemberContentValues.put("birthday", addNewMemberBirthday.getText().toString());
+        newMemberContentValues.put("photo", mCurrentPhotoPath);
+        newMemberContentValues.put("kinship", kinship);
+        newMemberContentValues.put("mother", addNewMemberMother.getText().toString());
+        newMemberContentValues.put("father", addNewMemberFather.getText().toString());
+        newMemberContentValues.put("likes", addNewMemberLikes.getText().toString());
+        newMemberContentValues.put("dislikes", addNewMemberDislikes.getText().toString());
+        newMemberContentValues.put("pets", addNewMemberPets.getText().toString());
+        newMemberContentValues.put("notes", addNewMemberNotes.getText().toString());
+        MainActivity.sqLiteDatabase.insert("Family",null, newMemberContentValues);
         Log.d("log", "Data Inserted");
 
         String fatherName, fatherSurname, fatherPatronymic = "", motherName, motherSurname, motherPatronymic = "";
@@ -277,20 +245,20 @@ public class AddNewMemberActivity extends AppCompatActivity {
             motherPatronymic = motherData[2];
         }
         ContentValues nemMemberFatherContentValues =new ContentValues();
-        nemMemberContentValues.put("name", fatherName);
-        nemMemberContentValues.put("surname", fatherSurname);
-        nemMemberContentValues.put("patronymic", fatherPatronymic);
-        nemMemberContentValues.put("birthday", addNewMemberFatherBirthday.getText().toString());
+        newMemberContentValues.put("name", fatherName);
+        newMemberContentValues.put("surname", fatherSurname);
+        newMemberContentValues.put("patronymic", fatherPatronymic);
+        newMemberContentValues.put("birthday", addNewMemberFatherBirthday.getText().toString());
         MainActivity.sqLiteDatabase.insert("Family",null, nemMemberFatherContentValues);
         Log.d("log", "Father`s Data Inserted");
 
         ContentValues nemMemberMotherContentValues =new ContentValues();
-        nemMemberContentValues.put("name", motherName);
-        nemMemberContentValues.put("surname", motherSurname);
-        nemMemberContentValues.put("patronymic", motherPatronymic);
-        nemMemberContentValues.put("birthday", addNewMemberMotherBirthday.getText().toString());
+        newMemberContentValues.put("name", motherName);
+        newMemberContentValues.put("surname", motherSurname);
+        newMemberContentValues.put("patronymic", motherPatronymic);
+        newMemberContentValues.put("birthday", addNewMemberMotherBirthday.getText().toString());
         MainActivity.sqLiteDatabase.insert("Family",null, nemMemberMotherContentValues);
-        Log.d("log", "Mather`s Data Inserted");
+        Log.d("log", "Mother`s Data Inserted");
 
 
     }

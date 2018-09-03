@@ -19,6 +19,7 @@
     <string name="dislikes">Dislikes</string>
     <string name="input_patronymic">Input patronymic</string>
     <string name="id">id</string>
+    <string name="input_correct_data">input correct data</string>
 
 
     <string-array name="photo_or_gallery">

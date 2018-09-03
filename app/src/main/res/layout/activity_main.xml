@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
+                    android:background="@drawable/back"
                     >
 
                 </android.support.v4.view.ViewPager>
@@ -43,7 +43,9 @@
                     android:id="@+id/viewPager2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/back"
+                   >
 
                 </android.support.v4.view.ViewPager>
 
@@ -51,13 +53,15 @@
                     android:id="@+id/viewPager3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/back"
+                   >
 
                 </android.support.v4.view.ViewPager>
 
 
             </LinearLayout>
-
+<!--text for photo-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -69,6 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/back"
                     android:text="hi" />
 
                 <TextView
@@ -76,6 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/back"
                     android:text="hi" />
 
                 <TextView
@@ -83,6 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/back"
                     android:text="hi" />
 
 

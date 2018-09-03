@@ -61,9 +61,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:layout_weight="1"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:onClick="birthday_onclick"
+                        android:focusable="true"
                         android:hint="Input birthday"
                         android:inputType="date" />
 
@@ -101,7 +99,7 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:hint="@string/input_birthday"
-                        android:inputType="textPersonName" />
+                        android:inputType="date" />
 
 
 
@@ -129,7 +127,7 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:hint="@string/input_birthday"
-                        android:inputType="textPersonName" />
+                        android:inputType="date" />
 
 
 

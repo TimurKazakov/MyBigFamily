@@ -87,6 +87,7 @@
                     android:layout_gravity="bottom"
 
                     android:layout_weight="1"
+                    android:onClick="firstLaunchSaveBtn"
 
                     android:text="@string/save" />
 
