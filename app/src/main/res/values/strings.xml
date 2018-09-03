@@ -28,11 +28,13 @@
 
 </string-array>
     <string-array name="family_enum">
+
         <item>brother/sister</item>
         <item>brother-in-law/sister-in-law</item>
         <item>son/daughter</item>
         <item>nephew/niece</item>
         <item>grandfather/grandmother</item>
         <item>uncle/aunt</item>
+        <item>husband/wife</item>
     </string-array>
 </resources>

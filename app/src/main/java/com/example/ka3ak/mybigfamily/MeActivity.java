@@ -37,14 +37,14 @@ public class MeActivity extends AppCompatActivity {
         String SQLname = cursor.getString(cursor.getColumnIndex("name"));
         String SQLsurname = cursor.getString(cursor.getColumnIndex("surname"));
         String SQLbirthday = cursor.getString(cursor.getColumnIndex("birthday"));
-        String SQlfatherTextView = "", SQlfatherBirthdayTextView = "", SQlmotherTextView="", SQlmotherBirthdayTextView="";
-        if(cursor.getString(cursor.getColumnIndex("father")) != null || cursor.getString(cursor.getColumnIndex("mother")) != null){
+        String SQlfatherTextView = "1", SQlfatherBirthdayTextView = "2", SQlmotherTextView="3", SQlmotherBirthdayTextView="4";
+
         SQlfatherTextView = cursor.getString(cursor.getColumnIndex("father"));
         SQlfatherBirthdayTextView = cursor.getString(cursor.getColumnIndex("fatherBirthday"));
         SQlmotherTextView = cursor.getString(cursor.getColumnIndex("mother"));
         SQlmotherBirthdayTextView = cursor.getString(cursor.getColumnIndex("motherBirthday"));
 
-        }
+
         name = findViewById(R.id.profile_name_editText);
         name.setText(SQLname);
         surname = findViewById(R.id.profile_surname_editText);

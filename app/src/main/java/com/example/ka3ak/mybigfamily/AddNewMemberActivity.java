@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -84,7 +85,9 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     kinship = 10-1;
                 }
 //                Toast.makeText(getBaseContext(), "" + item, Toast.LENGTH_SHORT).show();
-
+                if (position == 6) {
+                    kinship = 10;
+                }
             }
 
             @Override
@@ -222,13 +225,14 @@ public class AddNewMemberActivity extends AppCompatActivity {
         newMemberContentValues.put("photo", mCurrentPhotoPath);
         newMemberContentValues.put("kinship", kinship);
         newMemberContentValues.put("mother", addNewMemberMother.getText().toString());
+        newMemberContentValues.put("motherBirthday", addNewMemberMotherBirthday.getText().toString());
         newMemberContentValues.put("father", addNewMemberFather.getText().toString());
+        newMemberContentValues.put("fatherBirthday", addNewMemberFatherBirthday.getText().toString());
         newMemberContentValues.put("likes", addNewMemberLikes.getText().toString());
         newMemberContentValues.put("dislikes", addNewMemberDislikes.getText().toString());
         newMemberContentValues.put("pets", addNewMemberPets.getText().toString());
         newMemberContentValues.put("notes", addNewMemberNotes.getText().toString());
-        MainActivity.sqLiteDatabase.insert("Family",null, newMemberContentValues);
-        Log.d("log", "Data Inserted");
+
 
         String fatherName, fatherSurname, fatherPatronymic = "", motherName, motherSurname, motherPatronymic = "";
         String[] fatherData = addNewMemberFather.getText().toString().split(" ");
@@ -245,22 +249,38 @@ public class AddNewMemberActivity extends AppCompatActivity {
             motherPatronymic = motherData[2];
         }
         ContentValues nemMemberFatherContentValues =new ContentValues();
-        newMemberContentValues.put("name", fatherName);
-        newMemberContentValues.put("surname", fatherSurname);
-        newMemberContentValues.put("patronymic", fatherPatronymic);
-        newMemberContentValues.put("birthday", addNewMemberFatherBirthday.getText().toString());
-        MainActivity.sqLiteDatabase.insert("Family",null, nemMemberFatherContentValues);
-        Log.d("log", "Father`s Data Inserted");
+        nemMemberFatherContentValues.put("name", fatherName);
+        nemMemberFatherContentValues.put("surname", fatherSurname);
+       nemMemberFatherContentValues.put("patronymic", fatherPatronymic);
+       nemMemberFatherContentValues.put("birthday", addNewMemberFatherBirthday.getText().toString());
+
+
 
         ContentValues nemMemberMotherContentValues =new ContentValues();
-        newMemberContentValues.put("name", motherName);
-        newMemberContentValues.put("surname", motherSurname);
-        newMemberContentValues.put("patronymic", motherPatronymic);
-        newMemberContentValues.put("birthday", addNewMemberMotherBirthday.getText().toString());
-        MainActivity.sqLiteDatabase.insert("Family",null, nemMemberMotherContentValues);
-        Log.d("log", "Mother`s Data Inserted");
+       nemMemberMotherContentValues.put("name", motherName);
+       nemMemberMotherContentValues.put("surname", motherSurname);
+       nemMemberMotherContentValues.put("patronymic", motherPatronymic);
+       nemMemberMotherContentValues.put("birthday", addNewMemberMotherBirthday.getText().toString());
 
 
+        MainActivity.sqLiteDatabase.beginTransaction();
+        try {
+
+               long res1 = MainActivity.sqLiteDatabase.insert("Family", null, newMemberContentValues);
+
+            Log.d("log", "Data Inserted "+ res1);
+            long res2 = MainActivity.sqLiteDatabase.insert("Family", null, nemMemberFatherContentValues);
+            Log.d("log", "Father`s Data Inserted " + res2);
+            long res3 = MainActivity.sqLiteDatabase.insert("Family", null, nemMemberMotherContentValues);
+            Log.d("log", "Mother`s Data Inserted "+ res3);
+            MainActivity.sqLiteDatabase.setTransactionSuccessful();
+        }catch (Exception exp){
+            Toast.makeText(this,"DataBase error", Toast.LENGTH_LONG).show();
+        }
+        finally {
+            MainActivity.sqLiteDatabase.endTransaction();
+        }
+        finish();
     }
 
     public void onClickCancel(View view) {

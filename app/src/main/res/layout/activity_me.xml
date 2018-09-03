@@ -90,6 +90,7 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:hint="@string/father"
+
                         android:inputType="textPersonName" />
 
                     <EditText
@@ -98,6 +99,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:gravity="center"
                         android:hint="@string/input_birthday"
                         android:inputType="date" />
 
@@ -126,6 +128,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:gravity="center"
                         android:hint="@string/input_birthday"
                         android:inputType="date" />
 
