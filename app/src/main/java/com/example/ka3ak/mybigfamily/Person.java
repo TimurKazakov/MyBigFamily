@@ -15,9 +15,9 @@ public class Person extends Activity  {
 public static Person returnOwner(){
     Cursor cursor = MainActivity.sqLiteDatabase.query("Family", null,null,null, null, null, null);
     cursor.moveToFirst();
-    String name = cursor.getColumnName(cursor.getColumnIndex("name"));
-    String surname = cursor.getColumnName(cursor.getColumnIndex("surname"));
-    String birthday = cursor.getColumnName(cursor.getColumnIndex("birthday"));
+    String name = cursor.getString(cursor.getColumnIndex("name"));
+    String surname = cursor.getString(cursor.getColumnIndex("surname"));
+    String birthday = cursor.getString(cursor.getColumnIndex("birthday"));
     Log.d("log", "Data insert in main");
 
     Person me = new Person(name, surname, birthday);
@@ -27,6 +27,21 @@ public static Person returnOwner(){
     public Person(int id) {
         this.id = id;
         Cursor cursor = MainActivity.sqLiteDatabase.query("Family", null, "id ="+id, null,null,null,null);
+        this.name = cursor.getString(cursor.getColumnIndex("name"));
+        this.surname = cursor.getString(cursor.getColumnIndex("surname"));
+        this.patronymic = cursor.getString(cursor.getColumnIndex("patronymic"));
+        this.birthday = cursor.getString(cursor.getColumnIndex("birthday"));
+        this.photoUri = cursor.getString(cursor.getColumnIndex("photoUri"));
+        this.kinship = cursor.getString(cursor.getColumnIndex("kinship"));
+        this.mother = cursor.getString(cursor.getColumnIndex("mother"));
+        this.motherBirthday = cursor.getString(cursor.getColumnIndex("motherBirthday"));
+        this.father = cursor.getString(cursor.getColumnIndex("father"));
+        this.fatherBirthday = cursor.getString(cursor.getColumnIndex("fatherBirthday"));
+        this.likes = cursor.getString(cursor.getColumnIndex("likes"));
+        this.dislikes = cursor.getString(cursor.getColumnIndex("dislikes"));
+        this.pets = cursor.getString(cursor.getColumnIndex("pets"));
+        this.notes = cursor.getString(cursor.getColumnIndex("notes"));
+        cursor.close();
     }
 
     private int id;
@@ -101,7 +116,7 @@ public static Person returnOwner(){
 
     }
 
-    public Person(int id, String name, String surname, String patronymic, String birthday, String photoUri, String kinship, String mother, String father) {
+    public Person(int id, String name, String surname, String patronymic, String birthday, String photoUri, String kinship, String mother, String motherBirthday, String father, String fatherBirthday) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -110,7 +125,9 @@ public static Person returnOwner(){
         this.photoUri = photoUri;
         this.kinship = kinship;
         this.mother = mother;
+        this.motherBirthday = motherBirthday;
         this.father = father;
+        this.fatherBirthday = fatherBirthday;
     }
 
     public int getId() {
