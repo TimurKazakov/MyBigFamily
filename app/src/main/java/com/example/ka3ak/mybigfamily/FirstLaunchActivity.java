@@ -102,12 +102,12 @@ public class FirstLaunchActivity extends AppCompatActivity {
                 Cursor cursor =MainActivity.sqLiteDatabase.query("Family", null,null,null,null,null,null);
                 if(cursor.moveToFirst()) {
                     do {
-                        Log.d("log", ""+ "ID " + cursor.getInt(cursor.getColumnIndex("id")) +" Name " + cursor.getString(cursor.getColumnIndex("name")));
+                        Log.d("myLog", ""+ "ID " + cursor.getInt(cursor.getColumnIndex("id")) +" Name " + cursor.getString(cursor.getColumnIndex("name")));
 
 
                     } while (cursor.moveToNext());
                 }else {
-                    Log.d("log", "Table not found");
+                    Log.d("myLog", "Table not found");
                 }
                 MainActivity.sqLiteDatabase.execSQL("DELETE from "+"Family");
                 String TABLE_NAME = "Family";

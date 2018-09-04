@@ -27,24 +27,40 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
-   private Context context;
-   private LayoutInflater layoutInflater;
-   private Integer[] images = {R.drawable.mother, R.drawable.father};
-  public static Person currentPerson = null;
-
+    private static Person currentPerson = null;
+    private Context context;
+    private LayoutInflater layoutInflater;
+    private Integer[] images = {R.drawable.mother, R.drawable.father, R.drawable.father};
+    private Person[] personToShow = {};
 
     public ViewPagerAdapter(Context context) {
         this.context = context;
     }
 
+    public static Person getCurrentPerson() {
+        return currentPerson;
+    }
+
+    public static void setCurrentPerson(Person currentPerson) {
+        ViewPagerAdapter.currentPerson = currentPerson;
+    }
+
+    public Person[] getPersonToShow() {
+        return personToShow;
+    }
+
+    public void setPersonToShow(Person[] personToShow) {
+        this.personToShow = personToShow;
+    }
+
     @Override
     public int getCount() {
-        return  images.length;
+        return personToShow.length;
     }
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return view==o;
+        return view == o;
     }
 
     public Integer[] getImages() {
@@ -66,44 +82,47 @@ public class ViewPagerAdapter extends PagerAdapter {
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
 
 
-
 //        imageView.setImageResource(images[position]);
-try {
-    Cursor cursor;
-    cursor = MainActivity.sqLiteDatabase.query("Family", null, null, null, null, null, null);
-    cursor.moveToFirst();
-    String photoPath = cursor.getString(cursor.getColumnIndex("photo"));
-    cursor.close();
-    File photoFile = new File(photoPath);
-    Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-    bitmap = Bitmap.createScaledBitmap(bitmap, 150, 200, true);
 
-    imageView.setImageBitmap(bitmap);
-}
-catch (Exception exp){
+//try {
+//    Cursor cursor;
+//    cursor = MainActivity.sqLiteDatabase.query("Family", null, null, null, null, null, null);
+//    cursor.moveToFirst();
+//    String photoPath = cursor.getString(cursor.getColumnIndex("photo"));
+//    cursor.close();
+//    File photoFile = new File(photoPath);
+//    Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+//    bitmap = Bitmap.createScaledBitmap(bitmap, 150, 200, true);
+//
+//    imageView.setImageBitmap(bitmap);
+//}
+//catch (Exception exp){
+//
+//}
 
-}
+        try {
+            if (personToShow[position] != null) {
+                if (personToShow[position].getPhoto() != null) {
 
+                    imageView.setImageBitmap(personToShow[position].getReSizePhotoBitmap());
+                } else {
+                    imageView.setImageResource(R.drawable.not_avalible);
+                }
+            }
+        } catch (Exception e) {
 
-
-
-
-
-
-
-
-
+        }
 
 
         ViewPager vp = (ViewPager) container;
-        vp.addView(view,0);
+        vp.addView(view, 0);
         return view;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-       ViewPager vp = (ViewPager) container;
-       View view = (View) object;
-       vp.removeView(view);
+        ViewPager vp = (ViewPager) container;
+        View view = (View) object;
+        vp.removeView(view);
     }
 }

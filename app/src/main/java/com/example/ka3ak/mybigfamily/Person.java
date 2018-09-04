@@ -17,7 +17,7 @@ public class Person extends Activity {
     private String patronymic;
     private String birthday;
     private String photo;
-    private String kinship;
+    private int kinship;
     private String mother;
     private String motherBirthday;
     private String father;
@@ -30,16 +30,14 @@ public class Person extends Activity {
     public Person(int id) {
         this.id = id;
         String sqlQuery = "select * from Family where id=" + id;
-
         Cursor cursor = MainActivity.sqLiteDatabase.rawQuery(sqlQuery, null);
-
         cursor.moveToFirst();
         this.name = cursor.getString(cursor.getColumnIndex("name"));
         this.surname = cursor.getString(cursor.getColumnIndex("surname"));
         this.patronymic = cursor.getString(cursor.getColumnIndex("patronymic"));
         this.birthday = cursor.getString(cursor.getColumnIndex("birthday"));
         this.photo = cursor.getString(cursor.getColumnIndex("photo"));
-        this.kinship = cursor.getString(cursor.getColumnIndex("kinship"));
+        this.kinship = cursor.getInt(cursor.getColumnIndex("kinship"));
         this.mother = cursor.getString(cursor.getColumnIndex("mother"));
         this.motherBirthday = cursor.getString(cursor.getColumnIndex("motherBirthday"));
         this.father = cursor.getString(cursor.getColumnIndex("father"));
@@ -57,19 +55,14 @@ public class Person extends Activity {
         this.surname = surname;
         this.birthday = birthday;
 
+
     }
 
 
 
     public static Person returnOwner() {
-        Cursor cursor = MainActivity.sqLiteDatabase.query("Family", null, null, null, null, null, null);
-        cursor.moveToFirst();
-        String name = cursor.getString(cursor.getColumnIndex("name"));
-        String surname = cursor.getString(cursor.getColumnIndex("surname"));
-        String birthday = cursor.getString(cursor.getColumnIndex("birthday"));
-        Log.d("log", "Data insert in main");
 
-        Person me = new Person(name, surname, birthday);
+        Person me = new Person(1);
         return (me);
     }
 
@@ -199,11 +192,11 @@ public class Person extends Activity {
         this.father = father;
     }
 
-    public String getKinship() {
+    public int getKinship() {
         return kinship;
     }
 
-    public void setKinship(String kinship) {
+    public void setKinship(int kinship) {
         this.kinship = kinship;
     }
 
