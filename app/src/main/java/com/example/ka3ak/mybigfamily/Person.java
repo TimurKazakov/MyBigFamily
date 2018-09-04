@@ -2,36 +2,43 @@ package com.example.ka3ak.mybigfamily;
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.support.v4.view.ViewPager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.File;
 
-public class Person extends Activity  {
-
+public class Person extends Activity {
 
 
-public static Person returnOwner(){
-    Cursor cursor = MainActivity.sqLiteDatabase.query("Family", null,null,null, null, null, null);
-    cursor.moveToFirst();
-    String name = cursor.getString(cursor.getColumnIndex("name"));
-    String surname = cursor.getString(cursor.getColumnIndex("surname"));
-    String birthday = cursor.getString(cursor.getColumnIndex("birthday"));
-    Log.d("log", "Data insert in main");
-
-    Person me = new Person(name, surname, birthday);
-    return (me);
-}
+    private int id;
+    private String name;
+    private String surname;
+    private String patronymic;
+    private String birthday;
+    private String photo;
+    private String kinship;
+    private String mother;
+    private String motherBirthday;
+    private String father;
+    private String fatherBirthday;
+    private String likes;
+    private String dislikes;
+    private String pets;
+    private String notes;
 
     public Person(int id) {
         this.id = id;
-        Cursor cursor = MainActivity.sqLiteDatabase.query("Family", null, "id ="+id, null,null,null,null);
+        String sqlQuery = "select * from Family where id=" + id;
+
+        Cursor cursor = MainActivity.sqLiteDatabase.rawQuery(sqlQuery, null);
+
+        cursor.moveToFirst();
         this.name = cursor.getString(cursor.getColumnIndex("name"));
         this.surname = cursor.getString(cursor.getColumnIndex("surname"));
         this.patronymic = cursor.getString(cursor.getColumnIndex("patronymic"));
         this.birthday = cursor.getString(cursor.getColumnIndex("birthday"));
-        this.photoUri = cursor.getString(cursor.getColumnIndex("photoUri"));
+        this.photo = cursor.getString(cursor.getColumnIndex("photo"));
         this.kinship = cursor.getString(cursor.getColumnIndex("kinship"));
         this.mother = cursor.getString(cursor.getColumnIndex("mother"));
         this.motherBirthday = cursor.getString(cursor.getColumnIndex("motherBirthday"));
@@ -42,24 +49,43 @@ public static Person returnOwner(){
         this.pets = cursor.getString(cursor.getColumnIndex("pets"));
         this.notes = cursor.getString(cursor.getColumnIndex("notes"));
         cursor.close();
+        Log.d("myLog", "Person creating over ");
     }
 
-    private int id;
-    private String name;
-    private  String surname;
-    private   String patronymic;
-    private   String birthday;
-    private   String photoUri;
-    private   String kinship;
-    private   String mother;
-    private   String motherBirthday;
-    private   String father;
-    private   String fatherBirthday;
-    private   String likes;
-    private   String dislikes;
-    private   String pets;
-    private   String notes;
+    public Person(String name, String surname, String birthday) {
+        this.name = name;
+        this.surname = surname;
+        this.birthday = birthday;
 
+    }
+
+
+
+    public static Person returnOwner() {
+        Cursor cursor = MainActivity.sqLiteDatabase.query("Family", null, null, null, null, null, null);
+        cursor.moveToFirst();
+        String name = cursor.getString(cursor.getColumnIndex("name"));
+        String surname = cursor.getString(cursor.getColumnIndex("surname"));
+        String birthday = cursor.getString(cursor.getColumnIndex("birthday"));
+        Log.d("log", "Data insert in main");
+
+        Person me = new Person(name, surname, birthday);
+        return (me);
+    }
+
+    public Bitmap getReSizePhotoBitmap() {
+        File photoFile = new File(this.photo);
+        Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+        bitmap = Bitmap.createScaledBitmap(bitmap, 150, 200, true);
+        return bitmap;
+
+    }
+
+    public Bitmap getFullSizePhotoBitmap() {
+        File photoFile = new File(this.photo);
+        Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+        return bitmap;
+    }
 
     public String getMotherBirthday() {
         return motherBirthday;
@@ -109,27 +135,6 @@ public static Person returnOwner(){
         this.notes = notes;
     }
 
-    public Person(String name, String surname, String birthday) {
-        this.name = name;
-        this.surname = surname;
-        this.birthday = birthday;
-
-    }
-
-    public Person(int id, String name, String surname, String patronymic, String birthday, String photoUri, String kinship, String mother, String motherBirthday, String father, String fatherBirthday) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.birthday = birthday;
-        this.photoUri = photoUri;
-        this.kinship = kinship;
-        this.mother = mother;
-        this.motherBirthday = motherBirthday;
-        this.father = father;
-        this.fatherBirthday = fatherBirthday;
-    }
-
     public int getId() {
         return id;
     }
@@ -170,12 +175,12 @@ public static Person returnOwner(){
         this.birthday = birthday;
     }
 
-    public String getPhotoUri() {
-        return photoUri;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPhotoUri(String photoUri) {
-        this.photoUri = photoUri;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getMother() {
@@ -201,7 +206,6 @@ public static Person returnOwner(){
     public void setKinship(String kinship) {
         this.kinship = kinship;
     }
-
 
 
 }
