@@ -32,7 +32,8 @@ public class BirthdayActivity extends AppCompatActivity {
                     + " " + cursor.getString(cursor.getColumnIndex("name"))
                     + " " + cursor.getString(cursor.getColumnIndex("surname"))
                     + " " + cursor.getString(cursor.getColumnIndex("birthday"))
-                    + " " + cursor.getString(cursor.getColumnIndex("photo")));
+                    + " " + cursor.getString(cursor.getColumnIndex("photo"))
+                    +" k="+ cursor.getInt(cursor.getColumnIndex("kinship")));
             textViews[i].setTextSize(15);
             textViews[i].setLayoutParams(standartParamsForSQLQuery);
             birthdayLayout.addView(textViews[i]);

@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -30,8 +31,17 @@ public class ViewPagerAdapter extends PagerAdapter {
     private static Person currentPerson = null;
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer[] images = {R.drawable.mother, R.drawable.father, R.drawable.father};
+    private Integer[] images = {};
     private Person[] personToShow = {};
+    private TextView mainActivityPersonDataTextView = null;
+
+    public TextView getMainActivityPersonDataTextView() {
+        return mainActivityPersonDataTextView;
+    }
+
+    public void setMainActivityPersonDataTextView(TextView mainActivityPersonDataTextView) {
+        this.mainActivityPersonDataTextView = mainActivityPersonDataTextView;
+    }
 
     public ViewPagerAdapter(Context context) {
         this.context = context;
@@ -51,6 +61,8 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     public void setPersonToShow(Person[] personToShow) {
         this.personToShow = personToShow;
+
+
     }
 
     @Override
@@ -71,6 +83,10 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.images = images;
     }
 
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
+    }
 
     @NonNull
     @Override
@@ -80,7 +96,9 @@ public class ViewPagerAdapter extends PagerAdapter {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.activity_custom_swip, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-
+        imageView.setImageResource(R.drawable.grandfather);
+Log.d("myLog", "Position on InstantiateItem=" + position);
+Log.d("myLog", "Position on getItem Position=" + getItemPosition(personToShow[position]));
 
 //        imageView.setImageResource(images[position]);
 
@@ -101,14 +119,21 @@ public class ViewPagerAdapter extends PagerAdapter {
 //}
 
         try {
-            if (personToShow[position] != null) {
-                if (personToShow[position].getPhoto() != null) {
 
+
+            String toShow = "Name "+ personToShow[position].getName()+" \n"
+                    +"Surname "+ personToShow[position].getSurname() +"\n"+
+                    "Birthday " + personToShow[position].getBirthday();
+            mainActivityPersonDataTextView.setText(toShow);
+                mainActivityPersonDataTextView.setTextSize(25);
+
+                if (personToShow[position].getPhoto() != null) {
                     imageView.setImageBitmap(personToShow[position].getReSizePhotoBitmap());
+
                 } else {
                     imageView.setImageResource(R.drawable.not_avalible);
                 }
-            }
+
         } catch (Exception e) {
 
         }

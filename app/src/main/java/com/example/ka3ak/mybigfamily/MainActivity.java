@@ -1,6 +1,5 @@
 package com.example.ka3ak.mybigfamily;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import data.FamilyContract;
 
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         collectingPrimaryData();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         MainActivity.upperPager = (ViewPager) findViewById(R.id.viewPager);
         MainActivity.middlePager = (ViewPager) findViewById(R.id.viewPager2);
         MainActivity.lowerPager = (ViewPager) findViewById(R.id.viewPager3);
@@ -41,11 +42,7 @@ public class MainActivity extends AppCompatActivity {
         lowerMainActivityTextView = findViewById(R.id.main_activity_3_swapper_textview);
 
         ViewPagerAdapter topSwap = new ViewPagerAdapter(this);
-
-
         ViewPagerAdapter midSwap = new ViewPagerAdapter(this);
-
-
         ViewPagerAdapter botSwap = new ViewPagerAdapter(this);
 //        MainActivity.upperPager.setAdapter(topSwap);
 //        MainActivity.middlePager.setAdapter(midSwap);
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         MyTask me = new MyTask();
         Log.d("myLog", "before execute");
-        me.execute(topSwap, midSwap, botSwap );
+        me.execute(topSwap, midSwap, botSwap, upperMainActivityTextView, middleMainActivityTextView, lowerMainActivityTextView );
         Log.d("myLog", "after execute");
 
 
@@ -73,59 +70,51 @@ public class MainActivity extends AppCompatActivity {
         private  Person taskPerson = null;
 
         public Person[] returnOlderPeople(){
-            Person[] olderPeople;
-
-                olderPeople = new Person[MainActivity.dataBasePersons.length];
+            ArrayList<Person> olderPeopleArray = new ArrayList<>();
 
             Person father = findFather();
             Person mother = findMother();
-            olderPeople[0] = father;
-            olderPeople[1]= mother;
+            olderPeopleArray.add(father);
+            olderPeopleArray.add(mother);
 
-            int count = 2;
-            for (int i = 0; i <olderPeople.length ; i++) {
-                if (MainActivity.dataBasePersons[i] !=null &&
-                        MainActivity.dataBasePersons[i].getKinship()< taskPerson.getKinship()){
-                    olderPeople[count] = (MainActivity.dataBasePersons[i]);
-                    count++;
+
+
+            for (int i = 1; i <MainActivity.dataBasePersons.length ; i++) {
+                if ( MainActivity.dataBasePersons[i].getKinship()> taskPerson.getKinship()){
+                    olderPeopleArray.add(MainActivity.dataBasePersons[i]);
+
                 }
             }
+            HashSet<Person> personHashSet= new HashSet<>(olderPeopleArray);
+            Person[] olderPeople = personHashSet.toArray(new Person[0]);
             return olderPeople;
         }
-        public Person[] returnYoungerPeople(){
-            Person[] youngerPeople;
+        public Person[] returnSameAgePeople(){
+            ArrayList<Person> someAgePeopleArray = new ArrayList<>();
 
-                youngerPeople = new Person[MainActivity.dataBasePersons.length];
-
-
-
-
-            for (int i = 0; i <youngerPeople.length ; i++) {
-                if (MainActivity.dataBasePersons[i] !=null &&
-                        MainActivity.dataBasePersons[i].getKinship()> taskPerson.getKinship()){
-                    youngerPeople[i] = MainActivity.dataBasePersons[i];
+            for (int i = 0; i <MainActivity.dataBasePersons.length ; i++) {
+                if ( MainActivity.dataBasePersons[i].getKinship()== taskPerson.getKinship()){
+                    someAgePeopleArray.add(MainActivity.dataBasePersons[i]);
 
                 }
             }
+            Person[] SameAgePeople = someAgePeopleArray.toArray(new Person[0]);
+            return SameAgePeople;
+        }
+        public Person[] returnYoungerPeople(){
+            ArrayList<Person> youngerPeopleArray = new ArrayList<>();
+
+            for (int i = 1; i <MainActivity.dataBasePersons.length ; i++) {
+                if (MainActivity.dataBasePersons[i].getKinship()< taskPerson.getKinship()){
+                    youngerPeopleArray.add(MainActivity.dataBasePersons[i]);
+
+                }
+            }
+            Person[] youngerPeople = youngerPeopleArray.toArray(new Person[0]);
             return youngerPeople;
         }
-        public Person[] returnSameAgerPeople(){
-            Person[] SameAgerPeople;
-
-                SameAgerPeople = new Person[MainActivity.dataBasePersons.length];
 
 
-
-
-            for (int i = 0; i <SameAgerPeople.length ; i++) {
-                if (MainActivity.dataBasePersons[i] !=null &&
-                        MainActivity.dataBasePersons[i].getKinship()== taskPerson.getKinship()){
-                    SameAgerPeople[i] = MainActivity.dataBasePersons[i];
-
-                }
-            }
-            return SameAgerPeople;
-        }
 
         private Person findMother() {
             if (taskPerson.getMother() !=null) {
@@ -161,26 +150,34 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Object... objects) {
 
             try {
-                Log.d("myLog", "start");
-                Person owner = dataBasePersons[0];
 
+                Person owner = dataBasePersons[0];
                 setTaskPerson(owner);
-                Log.d("myLog", "start2");
+
                 Person[] older = returnOlderPeople();
+                Person[] someAge = returnSameAgePeople();
                 Person[] younger = returnYoungerPeople();
-                Person[] someAge = returnSameAgerPeople();
-                Log.d("myLog", ""+older.length);
-                Log.d("myLog", ""+ younger.length);
-               Log.d("myLog", taskPerson.getName()+" "+ taskPerson.getSurname());
+
+
+
                 ViewPagerAdapter top = (ViewPagerAdapter) objects[0];
-                top.setPersonToShow(older);
                 ViewPagerAdapter mid = (ViewPagerAdapter) objects[1];
-                mid.setPersonToShow(someAge);
                 ViewPagerAdapter bot = (ViewPagerAdapter) objects[2];
+
+                TextView upperMainActivityTextView = (TextView) objects[3];
+                TextView middleMainActivityTextView = (TextView) objects[4];
+                TextView lowerMainActivityTextView = (TextView) objects[5];
+
+                top.setPersonToShow(older);
+                mid.setPersonToShow(someAge);
                 bot.setPersonToShow(younger);
+                top.setMainActivityPersonDataTextView(upperMainActivityTextView);
+                mid.setMainActivityPersonDataTextView(middleMainActivityTextView);
+                bot.setMainActivityPersonDataTextView(lowerMainActivityTextView);
                 MainActivity.upperPager.setAdapter(top);
                 MainActivity.middlePager.setAdapter(mid);
                 MainActivity.lowerPager.setAdapter(bot);
+
             } catch (Exception e){
                 Log.d("myLog", "error");
             }

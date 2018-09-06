@@ -257,11 +257,14 @@ public class FirstLaunchActivity extends AppCompatActivity {
            fatherValues.put("name", " ");
            fatherValues.put("surname", " ");
            fatherValues.put("birthday", " ");
+           fatherValues.put("kinship", 11);
+
 
            ContentValues motherValues = new ContentValues();
            motherValues.put("name", " ");
            motherValues.put("surname", " ");
            motherValues.put("birthday", " ");
+           motherValues.put("kinship", 11);
 
            MainActivity.sqLiteDatabase.insert("Family",null, ownerValues);
            MainActivity.sqLiteDatabase.insert("Family",null, fatherValues);

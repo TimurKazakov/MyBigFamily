@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -28,7 +29,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,9 +83,9 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     kinship = 10;
                 }
                 if (position == 2 | position==3){
-                    kinship = 10+1;
-                }if (position == 4 | position==5){
                     kinship = 10-1;
+                }if (position == 4 | position==5){
+                    kinship = 10+1;
                 }
 //                Toast.makeText(getBaseContext(), "" + item, Toast.LENGTH_SHORT).show();
                 if (position == 6) {
@@ -151,12 +154,24 @@ public class AddNewMemberActivity extends AppCompatActivity {
         int width = 0;
         int height = 0;
 
+
         if (resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
+            mCurrentPhotoPath = selectedImage.getAuthority();
+
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                 width = startPhoto.getWidth();
                 height = startPhoto.getHeight();
+                File galleryFile = createImageFile();
+                Bitmap bitmapToFile = bitmap;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmapToFile.compress(Bitmap.CompressFormat.JPEG,0,bos);
+                byte[] bitmapToFileData = bos.toByteArray();
+                FileOutputStream fos = new FileOutputStream(galleryFile);
+                fos.write(bitmapToFileData);
+                bos.close();
+                fos.close();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -234,53 +249,84 @@ public class AddNewMemberActivity extends AppCompatActivity {
         newMemberContentValues.put("notes", addNewMemberNotes.getText().toString());
 
 
-        String fatherName, fatherSurname, fatherPatronymic = "", motherName, motherSurname, motherPatronymic = "";
-        String[] fatherData = addNewMemberFather.getText().toString().split(" ");
-        fatherSurname = fatherData[0];
-        fatherName = fatherData[1];
-        if (fatherData.length>2) {
-            fatherPatronymic = fatherData[2];
-        }
+        String fatherName="", fatherSurname="", fatherPatronymic= "", motherName="", motherSurname="", motherPatronymic = "", fatherBirthday="",motherBirthday="";
+        ContentValues nemMemberFatherContentValues= null,  nemMemberMotherContentValues=null;
+     try {
+         String[] fatherData = addNewMemberFather.getText().toString().split(" ");
+         fatherSurname = fatherData[0];
+         fatherName = fatherData[1];
+         if (fatherData.length > 2) {
+             fatherPatronymic = fatherData[2];
+         }
+          fatherBirthday = addNewMemberFatherBirthday.getText().toString();
+          nemMemberFatherContentValues = new ContentValues();
+         nemMemberFatherContentValues.put("name", fatherName);
+         nemMemberFatherContentValues.put("surname", fatherSurname);
+         nemMemberFatherContentValues.put("patronymic", fatherPatronymic);
+         nemMemberFatherContentValues.put("birthday", fatherBirthday);
+         nemMemberFatherContentValues.put("kinship", kinship + 1);
 
-        String[] motherData = addNewMemberMother.getText().toString().split(" ");
-        motherSurname = motherData[0];
-        motherName = motherData[1];
-        if (motherData.length>2) {
-            motherPatronymic = motherData[2];
-        }
-        ContentValues nemMemberFatherContentValues =new ContentValues();
-        nemMemberFatherContentValues.put("name", fatherName);
-        nemMemberFatherContentValues.put("surname", fatherSurname);
-       nemMemberFatherContentValues.put("patronymic", fatherPatronymic);
-       nemMemberFatherContentValues.put("birthday", addNewMemberFatherBirthday.getText().toString());
+         String[] motherData = addNewMemberMother.getText().toString().split(" ");
+         motherSurname = motherData[0];
+         motherName = motherData[1];
+         if (motherData.length > 2) {
+             motherPatronymic = motherData[2];
+         }
+          motherBirthday = addNewMemberMotherBirthday.getText().toString();
+          nemMemberMotherContentValues = new ContentValues();
+         nemMemberMotherContentValues.put("name", motherName);
+         nemMemberMotherContentValues.put("surname", motherSurname);
+         nemMemberMotherContentValues.put("patronymic", motherPatronymic);
+         nemMemberMotherContentValues.put("birthday", motherBirthday);
+         nemMemberMotherContentValues.put("kinship", kinship + 1);
+     } catch (Exception e){
+         Toast.makeText(this,"DataBase error", Toast.LENGTH_LONG).show();
+     }
 
 
-
-        ContentValues nemMemberMotherContentValues =new ContentValues();
-       nemMemberMotherContentValues.put("name", motherName);
-       nemMemberMotherContentValues.put("surname", motherSurname);
-       nemMemberMotherContentValues.put("patronymic", motherPatronymic);
-       nemMemberMotherContentValues.put("birthday", addNewMemberMotherBirthday.getText().toString());
-
-
-        MainActivity.sqLiteDatabase.beginTransaction();
         try {
 
-               long res1 = MainActivity.sqLiteDatabase.insert("Family", null, newMemberContentValues);
+            long res1 = MainActivity.sqLiteDatabase.insert("Family", null, newMemberContentValues);
 
-            Log.d("log", "Data Inserted "+ res1);
-            long res2 = MainActivity.sqLiteDatabase.insert("Family", null, nemMemberFatherContentValues);
-            Log.d("log", "Father`s Data Inserted " + res2);
-            long res3 = MainActivity.sqLiteDatabase.insert("Family", null, nemMemberMotherContentValues);
-            Log.d("log", "Mother`s Data Inserted "+ res3);
-            MainActivity.sqLiteDatabase.setTransactionSuccessful();
+        } catch (Exception exp) {
+            Toast.makeText(this,"DataBase error", Toast.LENGTH_LONG).show();
+        }
+
+
+           try {
+               MainActivity.sqLiteDatabase.beginTransaction();
+               if (fatherName !="" || fatherBirthday!="") {
+                   if (!CheckIsDataAlreadyInDBorNot("Family", new String[]{"name", "surname", "birthday"}, new String[]{fatherName, fatherSurname, fatherBirthday})) {
+                       long res2 = MainActivity.sqLiteDatabase.insert("Family", null, nemMemberFatherContentValues);
+
+
+                   } else {
+                       MainActivity.sqLiteDatabase.update("Family", nemMemberFatherContentValues, "birthday=?", new String[]{fatherBirthday});
+                   }
+               }
+               if (motherName !="" || motherBirthday!="") {
+                   if (!CheckIsDataAlreadyInDBorNot("Family", new String[]{"name", "surname", "birthday"}, new String[]{motherName, motherSurname, motherBirthday})) {
+                       long res3 = MainActivity.sqLiteDatabase.insert("Family", null, nemMemberMotherContentValues);
+
+
+                   } else {
+                       MainActivity.sqLiteDatabase.update("Family", nemMemberMotherContentValues, "birthday=?", new String[]{motherBirthday});
+                   }
+               }
+               MainActivity.sqLiteDatabase.setTransactionSuccessful();
+
+
         }catch (Exception exp){
             Toast.makeText(this,"DataBase error", Toast.LENGTH_LONG).show();
         }
         finally {
             MainActivity.sqLiteDatabase.endTransaction();
         }
-        finish();
+
+        kinship =10;
+
+        Intent firstLaunch = new Intent(AddNewMemberActivity.this, MainActivity.class);
+        startActivity(firstLaunch);
     }
 
     public void onClickCancel(View view) {
@@ -289,5 +335,21 @@ public class AddNewMemberActivity extends AppCompatActivity {
   //buttons
 
 
+
+    public static boolean CheckIsDataAlreadyInDBorNot(String TableName,
+                                                      String[] dbfield, String[] fieldValue) {
+
+
+        String Query = "Select * from  '" + TableName + "' where '" + dbfield[0] + "' = '" + fieldValue[0]+"' AND '"
+                +dbfield[1] + "' = '" + fieldValue[1] +"' AND '"
+                +dbfield[2] + "' = '" + fieldValue[2]+"'";
+        Cursor cursor = MainActivity.sqLiteDatabase.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
 
 }
