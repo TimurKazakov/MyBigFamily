@@ -62,38 +62,7 @@
 
             </LinearLayout>
 <!--text for photo-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/main_activity_1_swapper_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/back"
-                    android:text="hi" />
-
-                <TextView
-                    android:id="@+id/main_activity_2_swapper_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/back"
-                    android:text="hi" />
-
-                <TextView
-                    android:id="@+id/main_activity_3_swapper_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/back"
-                    android:text="hi" />
-
-
-            </LinearLayout>
 
         </LinearLayout>
 

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static FamilyContract familyBase;
     public static SQLiteDatabase sqLiteDatabase;
     public static Person[] dataBasePersons = null;
-    TextView upperMainActivityTextView, middleMainActivityTextView, lowerMainActivityTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.upperPager = (ViewPager) findViewById(R.id.viewPager);
         MainActivity.middlePager = (ViewPager) findViewById(R.id.viewPager2);
         MainActivity.lowerPager = (ViewPager) findViewById(R.id.viewPager3);
-        upperMainActivityTextView = findViewById(R.id.main_activity_1_swapper_textview);
-        middleMainActivityTextView = findViewById(R.id.main_activity_2_swapper_textview);
-        lowerMainActivityTextView = findViewById(R.id.main_activity_3_swapper_textview);
+
 
         ViewPagerAdapter topSwap = new ViewPagerAdapter(this);
         ViewPagerAdapter midSwap = new ViewPagerAdapter(this);
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         MyTask me = new MyTask();
         Log.d("myLog", "before execute");
-        me.execute(topSwap, midSwap, botSwap, upperMainActivityTextView, middleMainActivityTextView, lowerMainActivityTextView );
+        me.execute(topSwap, midSwap, botSwap);
         Log.d("myLog", "after execute");
 
 
@@ -164,16 +162,11 @@ public class MainActivity extends AppCompatActivity {
                 ViewPagerAdapter mid = (ViewPagerAdapter) objects[1];
                 ViewPagerAdapter bot = (ViewPagerAdapter) objects[2];
 
-                TextView upperMainActivityTextView = (TextView) objects[3];
-                TextView middleMainActivityTextView = (TextView) objects[4];
-                TextView lowerMainActivityTextView = (TextView) objects[5];
 
                 top.setPersonToShow(older);
                 mid.setPersonToShow(someAge);
                 bot.setPersonToShow(younger);
-                top.setMainActivityPersonDataTextView(upperMainActivityTextView);
-                mid.setMainActivityPersonDataTextView(middleMainActivityTextView);
-                bot.setMainActivityPersonDataTextView(lowerMainActivityTextView);
+
                 MainActivity.upperPager.setAdapter(top);
                 MainActivity.middlePager.setAdapter(mid);
                 MainActivity.lowerPager.setAdapter(bot);
@@ -245,10 +238,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onClickTree(View view) {
-        Intent intent = new Intent(MainActivity.this, TreeFrame.class);
-        startActivity(intent);
-    }
+    
 
     public void onClickMember(View view) {
         Intent intent = new Intent(MainActivity.this, AddNewMemberActivity.class);

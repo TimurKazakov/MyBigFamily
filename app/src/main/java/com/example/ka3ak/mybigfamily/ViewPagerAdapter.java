@@ -33,15 +33,11 @@ public class ViewPagerAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private Integer[] images = {};
     private Person[] personToShow = {};
-    private TextView mainActivityPersonDataTextView = null;
+       private TextView viewPagerTextView= null;
 
-    public TextView getMainActivityPersonDataTextView() {
-        return mainActivityPersonDataTextView;
-    }
 
-    public void setMainActivityPersonDataTextView(TextView mainActivityPersonDataTextView) {
-        this.mainActivityPersonDataTextView = mainActivityPersonDataTextView;
-    }
+
+
 
     public ViewPagerAdapter(Context context) {
         this.context = context;
@@ -97,6 +93,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.activity_custom_swip, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.grandfather);
+
 Log.d("myLog", "Position on InstantiateItem=" + position);
 Log.d("myLog", "Position on getItem Position=" + getItemPosition(personToShow[position]));
 
@@ -118,14 +115,17 @@ Log.d("myLog", "Position on getItem Position=" + getItemPosition(personToShow[po
 //
 //}
 
+
+        viewPagerTextView = (TextView) view.findViewById(R.id.custom_swip_textView);
         try {
 
 
             String toShow = "Name "+ personToShow[position].getName()+" \n"
                     +"Surname "+ personToShow[position].getSurname() +"\n"+
                     "Birthday " + personToShow[position].getBirthday();
-            mainActivityPersonDataTextView.setText(toShow);
-                mainActivityPersonDataTextView.setTextSize(25);
+            viewPagerTextView.setText(toShow);
+            viewPagerTextView.setTextSize(25);
+            viewPagerTextView.setText(toShow);
 
                 if (personToShow[position].getPhoto() != null) {
                     imageView.setImageBitmap(personToShow[position].getReSizePhotoBitmap());
@@ -137,6 +137,7 @@ Log.d("myLog", "Position on getItem Position=" + getItemPosition(personToShow[po
         } catch (Exception e) {
 
         }
+
 
 
         ViewPager vp = (ViewPager) container;

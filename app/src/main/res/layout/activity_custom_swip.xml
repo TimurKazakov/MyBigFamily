@@ -5,15 +5,22 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="68dp"
         android:layout_height="match_parent"
-        app:srcCompat="@mipmap/ic_launcher"
-        />
+        android:layout_weight="1"
+        app:srcCompat="@mipmap/ic_launcher" />
 
+    <TextView
+        android:id="@+id/custom_swip_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="blacvncvclvknxc"
+        android:layout_weight="3"
+        />
 </LinearLayout>
